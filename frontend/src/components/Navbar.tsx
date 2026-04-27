@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { useScrollNavbar } from "@/hooks/useScrollNavbar";
 import { Button } from "@/components/ui/button";
 import logoImg from "@/assets/Gemini_Generated_Image_kmomnfkmomnfkmom-removebg-preview.png";
@@ -86,7 +87,7 @@ export default function Navbar() {
               asChild
               className="hidden sm:inline-flex bg-red-600 text-[#121212] font-semibold hover:bg-red-500 hover:shadow-lg hover:shadow-red-600/25 active:scale-95 transition-all duration-200 h-10 px-6 rounded-lg"
             >
-              <a href="#pricing">Join Now</a>
+              <Link to="/login">Join Now</Link>
             </Button>
 
             {/* Hamburger Button (Mobile) */}
@@ -152,9 +153,9 @@ export default function Navbar() {
             asChild
             className="w-full mt-3 bg-red-600 text-[#121212] font-semibold hover:bg-red-500 active:scale-95 transition-all duration-200 h-auto py-3 rounded-lg"
           >
-            <a href="#pricing" onClick={closeMobileMenu}>
+            <Link to="/login" onClick={closeMobileMenu}>
               Join Now
-            </a>
+            </Link>
           </Button>
         </div>
       </div>

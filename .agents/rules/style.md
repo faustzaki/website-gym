@@ -2,8 +2,10 @@
 trigger: always_on
 ---
 
-[STYLE]
-- Gaya visual: Modern dan Minimalis
-- Color scheme: Dark theme dengan aksen hitam, merah dan putih. Light theme dengan putih, hitam, dan merah
-- Font: Plus Jakarta Sans
-- Gambar: Unsplash
+# Design & Style Guidelines
+
+- **Gaya Visual**: Modern, Premium, dan Minimalis.
+- **Tema Gelap (Dark Mode)**: Warna dasar gelap dengan aksen hitam, merah, dan putih.
+- **Tema Terang (Light Mode)**: Warna dasar putih dengan aksen hitam dan merah.
+- **Tipografi**: Plus Jakarta Sans.
+- **Sumber Gambar**: Unsplash.

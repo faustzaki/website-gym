@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useAuthStore } from "@/store/useAuthStore";
 import { Outlet, NavLink, Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import logoImg from "@/assets/Gemini_Generated_Image_kmomnfkmomnfkmom-removebg-preview.png";
@@ -127,6 +128,7 @@ export default function DashboardLayout() {
         <div className="px-3 pb-4 border-t border-white/[0.06] pt-4">
           <Button
             variant="ghost"
+            onClick={() => useAuthStore.getState().logout()}
             className="w-full justify-start gap-3 text-white/50 hover:text-red-500 hover:bg-red-600/5 h-10"
           >
             <LogOut size={18} />

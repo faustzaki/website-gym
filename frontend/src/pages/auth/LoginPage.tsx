@@ -1,34 +1,49 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Eye, EyeOff, ArrowRight } from "lucide-react";
+import { useAuthStore } from "@/store/useAuthStore";
+import api from "@/lib/axios";
 
 /**
  * LoginPage — Halaman login member dan admin.
- *
- * Fitur:
- * - Form email + password dengan validasi dasar.
- * - Toggle visibility password (ikon mata).
- * - Link ke halaman register.
- * - Saat ini menggunakan mock (belum terkoneksi ke API).
- *   Nanti akan di-hook ke Laravel Sanctum via POST /api/login.
  */
 export default function LoginPage() {
+  const navigate = useNavigate();
+  const setAuth = useAuthStore((state) => state.setAuth);
+  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    setError(null);
 
-    // TODO: Integrasi Laravel Sanctum
-    // await axios.post('/api/login', { email, password });
-    console.log("Login attempt:", { email, password });
+    try {
+      // --- MOCK CONNECTION TEMPORARY ---
+      // const response = await api.post("/login", { email, password });
+      // const { user, access_token } = response.data.data;
+      
+      const user = { id: 1, name: "Mock User", email: email || "mock@example.com", role: "admin" } as any;
+      const access_token = "mock-token-123";
 
-    setTimeout(() => setIsLoading(false), 1500);
+      setAuth(user, access_token);
+      
+      // Redirect ke dashboard
+      navigate("/dashboard");
+    } catch (err: any) {
+      setError(
+        err.response?.data?.message || 
+        "Login gagal. Pastikan email dan password benar."
+      );
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (

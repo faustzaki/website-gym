@@ -1,27 +1,25 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Eye, EyeOff, ArrowRight } from "lucide-react";
+import { useAuthStore } from "@/store/useAuthStore";
+import api from "@/lib/axios";
 
 /**
  * RegisterPage — Halaman pendaftaran member baru.
- *
- * Form input:
- * - Nama lengkap, Email, Password, Konfirmasi password.
- *
- * Fitur:
- * - Validasi: password dan konfirmasi harus cocok (client-side).
- * - Toggle visibility password.
- * - Nanti akan terkoneksi ke Laravel Sanctum via POST /api/register.
  */
 export default function RegisterPage() {
+  const navigate = useNavigate();
+  const setAuth = useAuthStore((state) => state.setAuth);
+  
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const passwordsMatch = password === confirmPassword;
 
@@ -30,12 +28,30 @@ export default function RegisterPage() {
     if (!passwordsMatch) return;
 
     setIsLoading(true);
+    setError(null);
 
-    // TODO: Integrasi Laravel Sanctum
-    // await axios.post('/api/register', { name, email, password, password_confirmation: confirmPassword });
-    console.log("Register attempt:", { name, email, password });
+    try {
+      const response = await api.post("/register", {
+        name,
+        email,
+        password,
+        password_confirmation: confirmPassword,
+      });
 
-    setTimeout(() => setIsLoading(false), 1500);
+      const { user, access_token } = response.data.data;
+      setAuth(user, access_token);
+      
+      // Redirect ke dashboard
+      navigate("/dashboard");
+    } catch (err: any) {
+      setError(
+        err.response?.data?.message || 
+        err.response?.data?.errors?.email?.[0] || 
+        "Registrasi gagal. Silakan coba lagi."
+      );
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (

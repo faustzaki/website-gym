@@ -1,4 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useEffect } from "react";
+import { useAuthStore } from "@/store/useAuthStore";
 
 // Layouts
 import PublicLayout from "@/layouts/PublicLayout";
@@ -6,6 +8,7 @@ import AuthLayout from "@/layouts/AuthLayout";
 import DashboardLayout from "@/layouts/DashboardLayout";
 import AdminLayout from "@/layouts/AdminLayout";
 import CoachLayout from "@/layouts/CoachLayout"; // NEW
+import ProtectedRoute from "@/components/auth/ProtectedRoute";
 
 // Public Pages
 import LandingPage from "@/pages/LandingPage";
@@ -18,6 +21,7 @@ import RegisterPage from "@/pages/auth/RegisterPage";
 import OverviewPage from "@/pages/dashboard/OverviewPage";
 import AdminOverviewPage from "@/pages/dashboard/AdminOverviewPage";
 import CoachOverviewPage from "@/pages/dashboard/CoachOverviewPage"; // NEW
+import { UserManagementPage } from "@/pages/dashboard/admin/UserManagementPage";
 
 /**
  * App Component
@@ -26,6 +30,12 @@ import CoachOverviewPage from "@/pages/dashboard/CoachOverviewPage"; // NEW
  * Memetakan URL path ke Layout dan Page yang sesuai.
  */
 function App() {
+  const checkAuth = useAuthStore((state) => state.checkAuth);
+
+  useEffect(() => {
+    checkAuth();
+  }, [checkAuth]);
+
   return (
     <BrowserRouter>
       <Routes>
@@ -47,17 +57,17 @@ function App() {
         </Route>
 
         {/* =========================================
-            MEMBER DASHBOARD ROUTES
-            Menggunakan DashboardLayout (Sidebar Member)
+            MEMBER DASHBOARD ROUTES (PROTECTED)
         ========================================= */}
-        <Route path="/dashboard" element={<DashboardLayout />}>
-          <Route index element={<OverviewPage />} />
-          {/* Placeholder for future pages */}
-          <Route path="schedule" element={<div className="p-4">Halaman Jadwal (Coming Soon)</div>} />
-          <Route path="progress" element={<div className="p-4">Halaman Progres (Coming Soon)</div>} />
-          <Route path="todos" element={<div className="p-4">Halaman To-Do (Coming Soon)</div>} />
-          <Route path="materials" element={<div className="p-4">Halaman Materi (Coming Soon)</div>} />
-          <Route path="settings" element={<div className="p-4">Halaman Pengaturan (Coming Soon)</div>} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/dashboard" element={<DashboardLayout />}>
+            <Route index element={<OverviewPage />} />
+            <Route path="schedule" element={<div className="p-4">Halaman Jadwal (Coming Soon)</div>} />
+            <Route path="progress" element={<div className="p-4">Halaman Progres (Coming Soon)</div>} />
+            <Route path="todos" element={<div className="p-4">Halaman To-Do (Coming Soon)</div>} />
+            <Route path="materials" element={<div className="p-4">Halaman Materi (Coming Soon)</div>} />
+            <Route path="settings" element={<div className="p-4">Halaman Pengaturan (Coming Soon)</div>} />
+          </Route>
         </Route>
 
         {/* =========================================
@@ -80,7 +90,9 @@ function App() {
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<AdminOverviewPage />} />
           {/* Placeholder for future pages */}
-          <Route path="users" element={<div className="p-4">Manajemen User (Coming Soon)</div>} />
+          {/* <Route element={<ProtectedRoute requiredRole="admin" />}> */}
+            <Route path="users" element={<UserManagementPage />} />
+          {/* </Route> */}
           <Route path="coaches" element={<div className="p-4">Manajemen Coach (Coming Soon)</div>} />
           <Route path="courses" element={<div className="p-4">Manajemen Kursus (Coming Soon)</div>} />
           <Route path="schedule" element={<div className="p-4">Jadwal & Kalender (Coming Soon)</div>} />

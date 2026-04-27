@@ -37,3 +37,8 @@ class User extends Authenticatable
         ];
     }
 }
+            'last_login_at' => 'datetime',
+            'password' => 'hashed',
+        ];
+    }
+}

@@ -59,25 +59,20 @@ const TODAY_SCHEDULE = [
   { time: "16:00", title: "Yoga & Flexibility", trainer: "Coach Maya", done: false },
 ];
 
+import { useAuthStore } from "@/store/useAuthStore";
+
 /**
  * OverviewPage — Halaman utama Member Dashboard.
- *
- * Menampilkan:
- * - Greeting personal.
- * - 4 stat cards (jumlah sesi, jadwal, progres, durasi).
- * - Jadwal hari ini (quick view).
- * - Quick action buttons.
- *
- * Semua data saat ini mock. Nanti di-replace dengan
- * data dari API (GET /api/dashboard/overview).
  */
 export default function OverviewPage() {
+  const user = useAuthStore((state) => state.user);
+
   return (
     <div className="space-y-6">
       {/* ====== GREETING ====== */}
       <div>
         <h1 className="text-2xl font-bold text-foreground">
-          Selamat Pagi, <span className="text-red-600">Member</span> 👋
+          Selamat Pagi, <span className="text-red-600">{user?.name || "Member"}</span> 👋
         </h1>
         <p className="text-sm text-muted-foreground mt-1">
           Siap untuk sesi latihan hari ini? Berikut ringkasan aktivitas Anda.

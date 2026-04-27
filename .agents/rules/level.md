@@ -2,7 +2,8 @@
 trigger: always_on
 ---
 
-Selalu jelaskan kode dan Implementation Plan (Rencana Implementasi) yang kamu buat dalam Bahasa Indonesia agar saya mudah memahaminya.
-Jika prompt saya kurang jelas, tanyakan detail sebelum membuat kode.
+# General Instructions
 
-Jika menggunakan library seperti Zustand, shadcn/ui, atau Sanctum — jelaskan dulu secara singkat kenapa dipakai sebelum menulis kode.
+- **Bahasa**: Selalu jelaskan kode dan Implementation Plan (Rencana Implementasi) dalam Bahasa Indonesia.
+- **Klarifikasi**: Jika prompt kurang jelas, tanyakan detail sebelum membuat kode.
+- **Penjelasan Eksternal**: Jika menggunakan library seperti Zustand, shadcn/ui, atau Sanctum, jelaskan secara singkat alasan penggunaannya sebelum menulis kode.
