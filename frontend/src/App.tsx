@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useEffect } from "react";
 import { useAuthStore } from "@/store/useAuthStore";
+import { Toaster } from "@/components/ui/sonner";
 
 // Layouts
 import PublicLayout from "@/layouts/PublicLayout";
@@ -22,6 +23,8 @@ import OverviewPage from "@/pages/dashboard/OverviewPage";
 import AdminOverviewPage from "@/pages/dashboard/AdminOverviewPage";
 import CoachOverviewPage from "@/pages/dashboard/CoachOverviewPage"; // NEW
 import { UserManagementPage } from "@/pages/dashboard/admin/UserManagementPage";
+import { CoachManagementPage } from "@/pages/dashboard/admin/CoachManagementPage";
+import { CoachFormPage } from "@/pages/dashboard/admin/CoachFormPage";
 
 /**
  * App Component
@@ -93,7 +96,9 @@ function App() {
           {/* <Route element={<ProtectedRoute requiredRole="admin" />}> */}
             <Route path="users" element={<UserManagementPage />} />
           {/* </Route> */}
-          <Route path="coaches" element={<div className="p-4">Manajemen Coach (Coming Soon)</div>} />
+          <Route path="coaches" element={<CoachManagementPage />} />
+            <Route path="coaches/create" element={<CoachFormPage />} />
+            <Route path="coaches/:id/edit" element={<CoachFormPage />} />
           <Route path="courses" element={<div className="p-4">Manajemen Kursus (Coming Soon)</div>} />
           <Route path="schedule" element={<div className="p-4">Jadwal & Kalender (Coming Soon)</div>} />
           <Route path="finance" element={<div className="p-4">Laporan Keuangan (Coming Soon)</div>} />
@@ -113,6 +118,7 @@ function App() {
           }
         />
       </Routes>
+      <Toaster position="top-right" richColors closeButton />
     </BrowserRouter>
   );
 }
